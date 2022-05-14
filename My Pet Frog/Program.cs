@@ -9,6 +9,7 @@ class MyPetFrog
     private static void Main(string[] args)
     {
         InitConsole();
+        Env.SetPos(0, 0);
         Write.String("This is an {y}example{c} of {g}Multi{cb}Colored{c} text!");
         Write.LineEnd(250);
         Write.String(ConsoleColor.Red,"This is a second line of text to display after the first line.");
@@ -17,51 +18,32 @@ class MyPetFrog
 
     private static void InitConsole()
     {
-        Console.SetWindowSize(100, 20);
-        Console.SetBufferSize(100, 20);
+        Env.Init(100,20);
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Env.GenerateBorder('█');
 
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.SetCursorPosition(78, 18);
+        Env.SetPos(76, 16);
         Console.Write(">___)/_\\-----/_\\(___<");
-        Console.SetCursorPosition(78, 17);
+        Env.SetPos(76, 15);
         Console.Write("__\\\\ \\\\       // //__");
-        Console.SetCursorPosition(78, 16);
+        Env.SetPos(76, 14);
         Console.Write("   / _/'-----'\\_ \\");
-        Console.SetCursorPosition(78, 15);
+        Env.SetPos(76, 13);
         Console.Write("    __(   \"   )__");
-        Console.SetCursorPosition(78, 14);
+        Env.SetPos(76, 12);
         Console.Write("      (')-=-(')");
-        Console.SetCursorPosition(78, 13);
+        Env.SetPos(76, 11);
         Console.Write("       _     _");
-        Console.SetCursorPosition(78, 12);
+        Env.SetPos(76, 10);
         Console.Write("       V. 0.1a");
-        Console.SetCursorPosition(78, 11);
+        Env.SetPos(76, 9);
         Console.Write("     My Pet Frog");
-        Console.SetCursorPosition(0, 0);
+        Env.SetPos(0,0);
         Console.ForegroundColor = ConsoleColor.White;
 
-        IntPtr handle = GetConsoleWindow();
-        IntPtr sysMenu = GetSystemMenu(handle, false);
-
-        if (handle != IntPtr.Zero)
-        {
-            DeleteMenu(sysMenu, SC_MINIMIZE, MF_BYCOMMAND);
-            DeleteMenu(sysMenu, SC_MAXIMIZE, MF_BYCOMMAND);
-            DeleteMenu(sysMenu, SC_SIZE, MF_BYCOMMAND);
-        }
+        
     }
 
-    private const int MF_BYCOMMAND = 0x00000000;
-    public const int SC_MINIMIZE = 0xF020;
-    public const int SC_MAXIMIZE = 0xF030;
-    public const int SC_SIZE = 0xF000;
-
-    [DllImport("user32.dll")]
-    public static extern int DeleteMenu(IntPtr hMenu, int nPosition, int wFlags);
-
-    [DllImport("user32.dll")]
-    private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
-
-    [DllImport("kernel32.dll", ExactSpelling = true)]
-    private static extern IntPtr GetConsoleWindow();
+    
 }
