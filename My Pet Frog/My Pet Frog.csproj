@@ -9,7 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Typewritter\Typewritter\Typewriter.csproj" />
+    <None Remove="Typewriter.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Typewriter.dll">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Reference Include="Typewriter">
+      <HintPath>Typewriter.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
