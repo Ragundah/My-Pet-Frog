@@ -9,7 +9,7 @@ class MyPetFrog
     private static void Main(string[] args)
     {
         InitConsole();
-        Write.String("This is an example testing the typewriter speed :)");
+        Write.String("This is an {y}example{c} of {g}Multi{cb}Colored{c} text!");
         Write.LineEnd(250);
         Write.String(ConsoleColor.Red,"This is a second line of text to display after the first line.");
         Console.ReadKey();
