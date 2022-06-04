@@ -21,6 +21,7 @@ class MyPetFrog
     {
         Init(); // Set Console Flags, Create Border, Create Logo, Show Version
         TimerInit(); // Set Default Timer Values and Enable Update and Processing timers.
+        Intro(); // Game Intro - Set the feel & Collect frog name.
         Write.AwaitInput(); // Prevent game from closing...
     }
 
@@ -45,7 +46,7 @@ class MyPetFrog
         Console.Write("       _     _");
         Env.SetPos(76, 10);
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("       V. 0.2a");
+        Console.Write("       V. 0.3a");
         Env.SetPos(0, 0);
         Console.ForegroundColor = ConsoleColor.White;
         Console.CursorVisible = false;
@@ -58,10 +59,10 @@ class MyPetFrog
 // Set Default Timer Values and Enable Update and Processing timers.
     private static void TimerInit()
     {
-        UpdateTimer = new PeriodicTimer(TimeSpan.FromSeconds(0.025));
+        UpdateTimer = new PeriodicTimer(TimeSpan.FromSeconds(0.075));
         ProcessingTimer = new PeriodicTimer(TimeSpan.FromSeconds(0.001));
         GameTimer = new PeriodicTimer(TimeSpan.FromSeconds(10));
-        AgeTimer = new PeriodicTimer(TimeSpan.FromMinutes(5));
+        AgeTimer = new PeriodicTimer(TimeSpan.FromMinutes(2.5)); // Age = 13 @ 30 Mins
         Update();
         Processing();
     }
@@ -144,7 +145,100 @@ class MyPetFrog
         }
     }
 
-
+    private static void Intro()
+    {
+        Env.Clear();
+        Env.SetPos(0, 0);
+        Write.String("Welcome intrepid youth. So you want to be a {g}frog{c} owner I hear!");
+        Write.LineEnd();
+        Write.String("While taking care of a {g}frog{c} might sound like a great time...");
+        Write.LineEnd();
+        Write.String("there are some things you will need to know.");
+        Write.LineEnd();
+        Write.LineEnd();
+        Write.String("{g}Frogs{c} have an average lifespan of 13 years!");
+        Write.LineEnd();
+        Write.String("This means it might seem easy to take care of a {g}frog{c} at first, but");
+        Write.LineEnd();
+        Write.String("over time it will become more difficult to keep up with thier needs.");
+        Write.LineEnd();
+        Write.String("Be sure you are prepared for the best and the worst!");
+        Write.LineEnd();
+        Write.String("You will need to {y}Play{c}, {y}Feed{c}, and {y}Heal{c} when required.");
+        Write.LineEnd();
+        Write.String("Remember, your {g}frog{c} has feelings too!");
+        Write.LineEnd();
+        Write.LineEnd();
+        Write.String("Are you sure you are ready for this adventure?");
+        Write.LineEnd();
+        Write.String("[Y] - Yes | [N] - No");
+        Write.LineEnd();
+        Write.LineEnd();
+        bool answered = false;
+        while(!answered)
+        {
+            switch (Write.AwaitInput())
+            {
+                case 'y': { answered = true; break; }
+                case 'n': { Env.Clear(); Env.SetPos(0, 0); Write.String("I see... in that case you should be on your way..."); Write.LineEnd(1000); Write.String("Stay safe out there... friend."); Write.LineEnd(1000); Environment.Exit(2); break; }
+                default: { Env.SetPos(0, Console.CursorTop - 2); Console.ForegroundColor = ConsoleColor.Red; Console.Write("Invalid input, please try again..."); Console.ForegroundColor = ConsoleColor.White; Env.SetPos(0, Console.CursorTop); break; }
+            }
+        }
+        Env.Clear();
+        Env.SetPos(0, 0);
+        Write.String("Wonderful! I have one more question for you before you wake up.");
+        Write.LineEnd();
+        Write.String("What would you name your {g}frog{c}?");
+        Write.LineEnd();
+        Write.LineEnd();
+        Write.LineEnd();
+        bool named = false;
+        while (!named)
+        {
+            FrogName = Console.ReadLine();
+            Console.SetCursorPosition(2, Console.CursorTop - 1);
+            string WidthText = "";
+            for (int i = 0; i < Console.WindowWidth - 25; i++)
+            {
+                WidthText += " ";
+            }
+            Console.Write(WidthText);
+            Console.SetCursorPosition(2, Console.CursorTop);
+            if (FrogName.Length > 75)
+            {
+                Thread.Sleep(1000); Console.Clear();
+                while (true)
+                {
+                    Write.String("Great, you broke it... are you happy?");
+                    Thread.Sleep(100);
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+            }
+            else
+            {
+                if (FrogName.Length >= 22)
+                {
+                    Console.SetCursorPosition(2, Console.CursorTop - 2);
+                    Write.String("{r}Sorry, but the max length for a name is 21 characters.{c}");
+                    Write.LineEnd(); Write.LineEnd();
+                }
+                else
+                {
+                    Write.String("Are you sure you like the name {g}" + FrogName + "{c}?");
+                    Write.LineEnd();
+                    answered = false;
+                    while (!answered)
+                    {
+                        switch (Write.AwaitInput())
+                        {
+                            default: break;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
     /*
     private static void WriteLine(string s)
